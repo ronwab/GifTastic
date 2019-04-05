@@ -12,13 +12,11 @@ $(document).ready(function () {
         var createButtons = $('<input/>').attr({
             type: 'button',
             id: searchVariable,
-            value: searchVariable
+            value: searchVariable,
+            class: "button",
         });
 
-        // testings = `#` + searchVariable;
-        // console.log(testings);
 
-        //appends the new buttons to the div on the page
         $("#sportsdiv").append(createButtons)
     }
 
@@ -39,91 +37,66 @@ $(document).ready(function () {
         var createButtons = $('<input/>').attr({
             type: 'button',
             id: inputText,
-            value: inputText
+            value: inputText,
+            class: "button"
         });
         $("#sportsdiv").append(createButtons)
         $('#searchTextBox').val(" ")
 
     })
+    $(document).on("click", ".button", function () {
 
-    var buttonval = $("")
+        var test2 = $(this).attr("id")
 
-    $(`#` + searchVariable).on("click", function () {
-
-        giphyurl = "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=" + searchVariable.value + "";
+        giphyurl = "https://api.giphy.com/v1/gifs/search?q=" + test2 + "&api_key=dc6zaTOxFJmzC&limit=10&rating=g";
         // giphyurl = " https://api.giphy.com/v1/gifs/search?api_key=WnI8FnWU9ICjRJwARWWZVGx415L5pgFO&q=" + searchVariable + "&limit=10&rating=g"
 
         $.ajax({
             url: giphyurl,
             method: "GET"
         }).then(function (response) {
-            console.log(response);
-            searchVariable = response.data.image_original_url;
-            // console.log(response.data[i].images["480w_still"].url);
-            searchVariable2 = response.data.image_mp4_url;
-            searchVariable3 = response.data.fixed_height_small_url;
-            console.log(searchVariable);
-            console.log(searchVariable2);
-            console.log(searchVariable3);
-            var imageonPage = $("<img>")
-            imageonPage.attr("src", searchVariable)
+
+                for (j = 0; j <= 10; j++) {
 
 
-            searchVariable === true ? searchVariable2 : searchVariable
+                    var image = '<img src= " ' + response.data[j].images.fixed_height_still.url +
+                        '" data-still=" ' + response.data[j].images.fixed_height_still.url +
+                        ' " data-animate=" ' + response.data[j].images.fixed_height.url +
+
+                        '" data-state="still" class="gifImage" style= "width:250px; height:250px">';
+                    // display the image
 
 
 
-            $("#giphyImages").append(imageonPage)
-        })
+
+                    image = '<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">' + image + "</div>";
+                    $('#sportsdiv').append(image);
+
+                }
+            }
+
+        )
     })
+
+    $(document).on("click", "img", function (event) {
+
+        console.log(event);
+
+        var data = event.target.dataset
+
+        var state = data.state;
+        // to run the gif
+        if (state == 'still') {
+
+
+            event.target.src = data.animate
+            data.state = "animate"
+        } else {
+            // To stop the gif
+
+            event.target.src = data.still
+            data.state = "still"
+        };
+    })
+
 })
-
-// var buttonValue = searchVariable.value
-
-// $("")
-
-
-
-
-
-// console.log(response.data[i].images["480w_still"].url);
-// var searchVariable = response.data.image_original_url;
-
-// displayimages = response.data[i].images["480w_still"].url;
-// var imageonPage = $("<img>")
-// imageonPage.attr("src", displayimages)
-
-// $("#giphyImages").append(imageonPage)
-
-
-//     })
-
-// })
-// Performs search based on click
-// $("running").on("click", ".btn", function () {
-//     var btnval = this.value
-//     console.log(this.value);
-
-
-//     // giphyurl = " https://api.giphy.com/v1/gifs/search?api_key=WnI8FnWU9ICjRJwARWWZVGx415L5pgFO&q=" + searchVariable + "&limit=10&rating=g"
-//     giphyurl = "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=cats";
-
-//     $.ajax({
-//         url: giphyurl,
-//         method: "GET"
-
-//     }).then(function (response) {
-//         console.log(response);
-
-//         // console.log(response.data[i].images["480w_still"].url);
-//         var searchVariable = response.data.image_original_url;
-
-//         displayimages = response.data[i].images["480w_still"].url;
-//         var imageonPage = $("<img>")
-//         imageonPage.attr("src", displayimages)
-
-//         $("#giphyImages").append(imageonPage)
-
-//     })
-
-// })
