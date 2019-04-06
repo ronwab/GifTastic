@@ -1,0 +1,11 @@
+.button-style {
+    margin: 20px
+}
+
+body {
+    background-image: url("../images/background.png")
+}
+
+.container {
+    padding-top: 40px;
+}
