@@ -5,50 +5,43 @@ $(document).ready(function () {
     var sports = ['UGA', 'Georgia State', 'Georgia Southern', 'Penn State', "Florida State", "Auburn", "Alabama", "Missispi state"]
     var inputText
     var data
-    // var numberofRowsButtons = $("<tr>").va
-    // var tableBody = ("<table>")
-
-    // function createButtonTable() {
-    //     var newtable = $("<input>").attr({
-    //         type: "table",
-    //         id: "newTable"
-    //     })
-
-    //     $("testTable").append(newtable)
-    // }
-
-    // createButtonTable()
+    var createButtons
 
     for (i = 0; i < sports.length; i++) {
 
         searchVariable = sports[i]
 
-        var createButtons = $('<input/>').attr({
+        createButtons = $('<input/>').attr({
             type: 'button',
             id: searchVariable,
             value: searchVariable,
             class: "button button-style  btn btn-primary"
         });
 
-
         $("#sportsdiv").append(createButtons)
     }
 
-    $("#submit").on("click", function () {
+    $("#submit").on("click", function (event) {
+        event.preventDefault()
         inputText = $('#searchTextBox').val().trim()
+
+        // if (inputText = " ") {
+        //     alert("enter your Almer mata")
+        //     $('#searchTextBox').val(" ")
+        // } else if (inputText != " ") {
+
         console.log(inputText);
 
         sports.push(inputText)
         // sports.push(createButtons)
 
-        console.log(sports);
         $("#sportsdiv").attr({
             value: inputText
         })
 
         // creates new buttons
         createDynamicButton()
-
+        // };
     })
 
     function createDynamicButton() {
@@ -62,8 +55,8 @@ $(document).ready(function () {
         $('#searchTextBox').val(" ")
 
     }
-    $(document).on("click", ".button", function () {
-
+    $(document).on("click", ".button", function (event) {
+        event.preventDefault()
         var test2 = $(this).attr("id")
 
         giphyurl = "https://api.giphy.com/v1/gifs/search?q=" + test2 + "&api_key=dc6zaTOxFJmzC&limit=10&rating=g";
@@ -83,8 +76,7 @@ $(document).ready(function () {
                         '" data-state="still" class="gifImage" style= "width:250px; height:250px">';
 
                     // image = '<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">' + image + "</div>";
-                    $('#sportsdiv').append(image);
-
+                    $('#sportsImages').append(image);
                 }
             }
 
@@ -92,8 +84,6 @@ $(document).ready(function () {
     })
 
     $(document).on("click", "img", function (event) {
-
-        console.log(event);
 
         data = event.target.dataset
 
